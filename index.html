@@ -8,25 +8,22 @@
     :root{
       --bg:#000000;
 
-      /* text */
       --text: rgba(255,255,255,.92);
       --muted: rgba(255,255,255,.72);
 
-      /* AQUINTAQA cyan (поменяй на точный фирменный, если другой) */
       --cyan:#00D7FF;
 
-      /* overlay 30–35% */
       --overlay: 0.33;
 
       --max: 1240px;
-
-      /* Layout like reference: video dominates */
       --gap: 56px;
-      --h1: 44px;
-      --h1lh: 1.06;
+
+      /* smaller headline */
+      --h1: 38px;
+      --h1lh: 1.08;
 
       --body: 16px;
-      --bodylh: 1.55;
+      --bodylh: 1.6;
 
       --radius: 22px;
       --shadow: 0 12px 40px rgba(0,0,0,.45);
@@ -54,15 +51,14 @@
       max-width: var(--max);
     }
 
-    /* Grid: H1 on top spanning, then left text + right video */
     .grid{
       display:grid;
-      grid-template-columns: 0.9fr 1.6fr; /* video bigger */
+      grid-template-columns: 0.9fr 1.6fr;
       gap: var(--gap);
       align-items:start;
     }
 
-    /* H1 row (spans both columns) */
+    /* H1 above everything */
     .heroTitle{
       grid-column: 1 / -1;
       margin: 0 0 18px 0;
@@ -71,22 +67,33 @@
       letter-spacing: -0.02em;
       font-weight: 500;
       color: var(--text);
-      max-width: 980px; /* controls second line length (≈ to mid-video like ref) */
+      max-width: 980px;
     }
     .heroTitle .line{ display:block; }
 
     /* LEFT */
     .left{
-      padding-top: 6px; /* align optically under title */
+      padding-top: 6px;
     }
 
     .body{
       margin: 0 0 22px 0;
-      max-width: 460px;
+      max-width: 440px;   /* keeps it as a clean column */
       font-size: var(--body);
       line-height: var(--bodylh);
       letter-spacing: 0.01em;
       color: var(--muted);
+      text-wrap: pretty;
+    }
+    .body p{
+      margin: 0 0 10px 0; /* column rhythm */
+    }
+    .body p:last-child{
+      margin-bottom: 0;
+    }
+    .body strong{
+      color: var(--text);
+      font-weight: 700;
     }
 
     .cta{
@@ -119,9 +126,9 @@
       outline-offset: 3px;
     }
 
-    /* RIGHT: VIDEO */
+    /* RIGHT */
     .right{
-      padding-top: 0px; /* video sits close under title like reference */
+      padding-top: 0;
     }
 
     .videoCard{
@@ -133,7 +140,7 @@
       overflow:hidden;
       background: #050505;
       box-shadow: var(--shadow);
-      margin-top: 6px; /* tiny separation under title */
+      margin-top: 6px;
     }
 
     .videoCard video{
@@ -168,21 +175,19 @@
       }
       .screen{ padding: 48px 22px; }
       .heroTitle{
-        font-size: 38px;
+        font-size: 34px;
         max-width: 100%;
       }
-      .right{ padding-top: 0; }
       .videoCard{
         aspect-ratio: 16 / 10;
         min-height: 320px;
         margin-top: 0;
       }
-      .left{ padding-top: 0; }
       .body{ max-width: 100%; }
     }
 
     @media (max-width: 520px){
-      .heroTitle{ font-size: 32px; }
+      .heroTitle{ font-size: 30px; }
       .body{ font-size: 15px; }
       .cta{ height: 42px; }
     }
@@ -193,28 +198,28 @@
   <main class="screen">
     <section class="wrap">
       <div class="grid">
-        <!-- H1 ABOVE VIDEO, 2 lines, 2nd line visually reaches mid-video -->
+
+        <!-- FIXED LINE BREAK: second line starts with "platform" -->
         <h1 class="heroTitle">
-          <span class="line">AQUINTAQA is a next-generation desalination platform</span>
-          <span class="line">based on a volumetric gas–sorbent process.</span>
+          <span class="line">AQUINTAQA is a next-generation desalination</span>
+          <span class="line">platform based on a volumetric gas–sorbent process.</span>
         </h1>
 
-        <!-- LEFT TEXT -->
+        <!-- LEFT COLUMN BODY -->
         <div class="left">
-          <p class="body">
-            An international team of engineers and researchers. Process architecture is established; key
-            operating modes have been demonstrated on prototypes and verified by independent labs
-            (before/after). We are ready to move from prototypes to industrial engineering design and
-            scale-up. Investor materials and next steps — on the Investor Page.
-          </p>
+          <div class="body">
+            <p>An international team of engineers and researchers.</p>
+            <p>Process architecture is established; key operating modes have been demonstrated on prototypes and verified by independent labs (before/after).</p>
+            <p>We are ready to move from prototypes to industrial engineering design and scale-up.</p>
+            <p><strong>Investor materials and next steps — on the Investor Page.</strong></p>
+          </div>
 
-          <!-- href поставь на реальную страницу инвестора; пока можно оставить # -->
           <a class="cta" href="#" target="_self" rel="noopener">
             OPEN INVESTOR PAGE
           </a>
         </div>
 
-        <!-- RIGHT VIDEO (DOMINANT) -->
+        <!-- RIGHT VIDEO -->
         <div class="right">
           <div class="videoCard" aria-label="AQUINTAQA video loop">
             <video
@@ -229,12 +234,12 @@
             <div class="videoBorder" aria-hidden="true"></div>
           </div>
         </div>
+
       </div>
     </section>
   </main>
 
   <script>
-    // Autoplay fallback: if blocked, start on first user interaction
     const v = document.querySelector("video");
     if (v) {
       const tryPlay = () => v.play().catch(()=>{});
