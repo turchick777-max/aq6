@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AQUINTAQA — Screen 6 (Video)</title>
+  <style>
+    :root{
+      --bg:#000000;
+
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.72);
+      --muted2: rgba(255,255,255,.55);
+
+      /* Поменяй на фирменный циан AQUINTAQA, если у тебя он задан в проекте */
+      --cyan:#00D7FF;
+
+      --overlay: 0.33; /* 30–35% по ТЗ/правке клиента */
+
+      --max: 1200px;
+      --gap: 44px;
+
+      --h1: 44px;     /* как на прошлом экране по соотношению */
+      --h1lh: 1.06;
+
+      --body: 16px;
+      --bodylh: 1.55;
+
+      --radius: 22px;
+      --shadow: 0 12px 40px rgba(0,0,0,.45);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    .screen{
+      min-height: 100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 64px 32px;
+    }
+
+    .wrap{
+      width:100%;
+      max-width: var(--max);
+      display:grid;
+      grid-template-columns: 1fr 1.25fr;
+      gap: var(--gap);
+      align-items:center;
+    }
+
+    /* LEFT */
+    .left{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+    }
+
+    h1{
+      margin:0 0 18px 0;
+      font-size: var(--h1);
+      line-height: var(--h1lh);
+      letter-spacing: -0.02em;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .body{
+      margin:0 0 22px 0;
+      max-width: 520px;
+      font-size: var(--body);
+      line-height: var(--bodylh);
+      letter-spacing: 0.01em;
+      color: var(--muted);
+    }
+
+    .cta{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      height: 44px;
+      padding: 0 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,215,255,.55);
+      background: rgba(0,215,255,.12);
+      color: rgba(255,255,255,.92);
+      font-size: 13px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-weight: 600;
+      text-decoration:none;
+      user-select:none;
+      transition: transform .2s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
+      box-shadow: 0 0 0 1px rgba(0,0,0,.35) inset;
+    }
+    .cta:hover{
+      background: rgba(0,215,255,.18);
+      border-color: rgba(0,215,255,.75);
+      box-shadow: 0 0 0 1px rgba(0,0,0,.35) inset, 0 10px 26px rgba(0,215,255,.10);
+    }
+    .cta:active{ transform: scale(.98); }
+    .cta:focus-visible{
+      outline: 1.5px solid rgba(0,215,255,.95);
+      outline-offset: 3px;
+    }
+
+    /* RIGHT: VIDEO */
+    .videoCard{
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: var(--radius);
+      overflow:hidden;
+      background: #050505;
+      box-shadow: var(--shadow);
+    }
+
+    .videoCard video{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      transform: translateZ(0);
+    }
+
+    .videoOverlay{
+      position:absolute;
+      inset:0;
+      background: rgba(0,0,0,var(--overlay));
+      pointer-events:none;
+    }
+
+    /* subtle border like premium UI */
+    .videoBorder{
+      position:absolute;
+      inset:0;
+      border-radius: var(--radius);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.06) inset;
+      pointer-events:none;
+    }
+
+    /* optional tiny caption under video (if ever needed) */
+    .hint{
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--muted2);
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .wrap{
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+      .screen{ padding: 48px 22px; }
+      h1{ font-size: 38px; }
+      .videoCard{ aspect-ratio: 16 / 10; }
+    }
+
+    @media (max-width: 520px){
+      h1{ font-size: 32px; }
+      .body{ font-size: 15px; }
+      .cta{ height: 42px; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="screen">
+    <section class="wrap">
+
+      <!-- LEFT -->
+      <div class="left">
+        <h1>
+          AQUINTAQA is a next-generation desalination platform<br/>
+          based on a volumetric gas–sorbent process.
+        </h1>
+
+        <p class="body">
+          An international team of engineers and researchers. Process architecture is established; key
+          operating modes have been demonstrated on prototypes and verified by independent labs
+          (before/after). We are ready to move from prototypes to industrial engineering design and
+          scale-up. Investor materials and next steps — on the Investor Page.
+        </p>
+
+        <!-- link href поставь на реальную страницу инвестора, пока можно оставить # -->
+        <a class="cta" href="#" target="_self" rel="noopener">
+          OPEN INVESTOR PAGE
+        </a>
+      </div>
+
+      <!-- RIGHT -->
+      <div>
+        <div class="videoCard" aria-label="AQUINTAQA video loop">
+          <video
+            src="aquintaqa-process-loop.mp4"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto"
+          ></video>
+          <div class="videoOverlay" aria-hidden="true"></div>
+          <div class="videoBorder" aria-hidden="true"></div>
+        </div>
+        <!-- <div class="hint">Loop video • no controls • 30–35% overlay</div> -->
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    // Safety: если браузер не дал autoplay — пробуем стартануть после первого взаимодействия
+    const v = document.querySelector("video");
+    if (v) {
+      const tryPlay = () => v.play().catch(()=>{});
+      tryPlay();
+      window.addEventListener("pointerdown", tryPlay, { once: true });
+      window.addEventListener("keydown", tryPlay, { once: true });
+    }
+  </script>
+</body>
+</html>
