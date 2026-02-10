@@ -8,19 +8,21 @@
     :root{
       --bg:#000000;
 
+      /* text */
       --text: rgba(255,255,255,.92);
       --muted: rgba(255,255,255,.72);
-      --muted2: rgba(255,255,255,.55);
 
-      /* Поменяй на фирменный циан AQUINTAQA, если у тебя он задан в проекте */
+      /* AQUINTAQA cyan (поменяй на точный фирменный, если другой) */
       --cyan:#00D7FF;
 
-      --overlay: 0.33; /* 30–35% по ТЗ/правке клиента */
+      /* overlay 30–35% */
+      --overlay: 0.33;
 
-      --max: 1200px;
-      --gap: 44px;
+      --max: 1240px;
 
-      --h1: 44px;     /* как на прошлом экране по соотношению */
+      /* Layout like reference: video dominates */
+      --gap: 56px;
+      --h1: 44px;
       --h1lh: 1.06;
 
       --body: 16px;
@@ -50,31 +52,37 @@
     .wrap{
       width:100%;
       max-width: var(--max);
+    }
+
+    /* Grid: H1 on top spanning, then left text + right video */
+    .grid{
       display:grid;
-      grid-template-columns: 1fr 1.25fr;
+      grid-template-columns: 0.9fr 1.6fr; /* video bigger */
       gap: var(--gap);
-      align-items:center;
+      align-items:start;
     }
 
-    /* LEFT */
-    .left{
-      display:flex;
-      flex-direction:column;
-      align-items:flex-start;
-    }
-
-    h1{
-      margin:0 0 18px 0;
+    /* H1 row (spans both columns) */
+    .heroTitle{
+      grid-column: 1 / -1;
+      margin: 0 0 18px 0;
       font-size: var(--h1);
       line-height: var(--h1lh);
       letter-spacing: -0.02em;
       font-weight: 500;
       color: var(--text);
+      max-width: 980px; /* controls second line length (≈ to mid-video like ref) */
+    }
+    .heroTitle .line{ display:block; }
+
+    /* LEFT */
+    .left{
+      padding-top: 6px; /* align optically under title */
     }
 
     .body{
-      margin:0 0 22px 0;
-      max-width: 520px;
+      margin: 0 0 22px 0;
+      max-width: 460px;
       font-size: var(--body);
       line-height: var(--bodylh);
       letter-spacing: 0.01em;
@@ -112,14 +120,20 @@
     }
 
     /* RIGHT: VIDEO */
+    .right{
+      padding-top: 0px; /* video sits close under title like reference */
+    }
+
     .videoCard{
       position: relative;
       width: 100%;
       aspect-ratio: 16 / 9;
+      min-height: 420px;
       border-radius: var(--radius);
       overflow:hidden;
       background: #050505;
       box-shadow: var(--shadow);
+      margin-top: 6px; /* tiny separation under title */
     }
 
     .videoCard video{
@@ -138,7 +152,6 @@
       pointer-events:none;
     }
 
-    /* subtle border like premium UI */
     .videoBorder{
       position:absolute;
       inset:0;
@@ -147,26 +160,29 @@
       pointer-events:none;
     }
 
-    /* optional tiny caption under video (if ever needed) */
-    .hint{
-      margin-top: 10px;
-      font-size: 12px;
-      color: var(--muted2);
-    }
-
     /* Responsive */
     @media (max-width: 980px){
-      .wrap{
+      .grid{
         grid-template-columns: 1fr;
         gap: 28px;
       }
       .screen{ padding: 48px 22px; }
-      h1{ font-size: 38px; }
-      .videoCard{ aspect-ratio: 16 / 10; }
+      .heroTitle{
+        font-size: 38px;
+        max-width: 100%;
+      }
+      .right{ padding-top: 0; }
+      .videoCard{
+        aspect-ratio: 16 / 10;
+        min-height: 320px;
+        margin-top: 0;
+      }
+      .left{ padding-top: 0; }
+      .body{ max-width: 100%; }
     }
 
     @media (max-width: 520px){
-      h1{ font-size: 32px; }
+      .heroTitle{ font-size: 32px; }
       .body{ font-size: 15px; }
       .cta{ height: 42px; }
     }
@@ -176,49 +192,49 @@
 <body>
   <main class="screen">
     <section class="wrap">
-
-      <!-- LEFT -->
-      <div class="left">
-        <h1>
-          AQUINTAQA is a next-generation desalination platform<br/>
-          based on a volumetric gas–sorbent process.
+      <div class="grid">
+        <!-- H1 ABOVE VIDEO, 2 lines, 2nd line visually reaches mid-video -->
+        <h1 class="heroTitle">
+          <span class="line">AQUINTAQA is a next-generation desalination platform</span>
+          <span class="line">based on a volumetric gas–sorbent process.</span>
         </h1>
 
-        <p class="body">
-          An international team of engineers and researchers. Process architecture is established; key
-          operating modes have been demonstrated on prototypes and verified by independent labs
-          (before/after). We are ready to move from prototypes to industrial engineering design and
-          scale-up. Investor materials and next steps — on the Investor Page.
-        </p>
+        <!-- LEFT TEXT -->
+        <div class="left">
+          <p class="body">
+            An international team of engineers and researchers. Process architecture is established; key
+            operating modes have been demonstrated on prototypes and verified by independent labs
+            (before/after). We are ready to move from prototypes to industrial engineering design and
+            scale-up. Investor materials and next steps — on the Investor Page.
+          </p>
 
-        <!-- link href поставь на реальную страницу инвестора, пока можно оставить # -->
-        <a class="cta" href="#" target="_self" rel="noopener">
-          OPEN INVESTOR PAGE
-        </a>
-      </div>
-
-      <!-- RIGHT -->
-      <div>
-        <div class="videoCard" aria-label="AQUINTAQA video loop">
-          <video
-            src="aquintaqa-process-loop.mp4"
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="auto"
-          ></video>
-          <div class="videoOverlay" aria-hidden="true"></div>
-          <div class="videoBorder" aria-hidden="true"></div>
+          <!-- href поставь на реальную страницу инвестора; пока можно оставить # -->
+          <a class="cta" href="#" target="_self" rel="noopener">
+            OPEN INVESTOR PAGE
+          </a>
         </div>
-        <!-- <div class="hint">Loop video • no controls • 30–35% overlay</div> -->
-      </div>
 
+        <!-- RIGHT VIDEO (DOMINANT) -->
+        <div class="right">
+          <div class="videoCard" aria-label="AQUINTAQA video loop">
+            <video
+              src="aquintaqa-process-loop.mp4"
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="auto"
+            ></video>
+            <div class="videoOverlay" aria-hidden="true"></div>
+            <div class="videoBorder" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
 
   <script>
-    // Safety: если браузер не дал autoplay — пробуем стартануть после первого взаимодействия
+    // Autoplay fallback: if blocked, start on first user interaction
     const v = document.querySelector("video");
     if (v) {
       const tryPlay = () => v.play().catch(()=>{});
